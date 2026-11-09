@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlayCine011 — Assista Filmes e Séries em 4K</title>
+<meta name="description" content="Streaming de filmes, séries, animes, doramas e esportes em 4K. Planos a partir de R$ 14,99.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0908; --fg:#f8f4f4; --card:#191212; --border:#372a2a;
+  --primary:#e50221; --primary-fg:#fff5f5; --muted:#ab9a99;
+  --gold:#dba400; --red:#e50221;
+  --grad-primary:linear-gradient(135deg,#e50221,#a30021);
+  --grad-gold:linear-gradient(135deg,#dba400,#a97500);
+  --grad-card:linear-gradient(160deg,#211818,#120b0b);
+  --shadow-glow:0 0 40px -8px rgba(229,2,33,.55);
+  --shadow-gold:0 0 40px -8px rgba(219,164,0,.55);
+  --shadow-card:0 18px 40px -16px rgba(0,0,0,.7);
+  --radius:.75rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3,.font-display{font-family:'Oswald','Inter',sans-serif;letter-spacing:.01em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:72rem;margin:0 auto;padding:0 1rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;cursor:pointer;border:none;border-radius:.5rem;transition:all .2s}
+.btn-primary{background:var(--grad-primary);color:var(--primary-fg);box-shadow:var(--shadow-glow);padding:.75rem 1.5rem}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-gold{background:var(--grad-gold);color:#000;box-shadow:var(--shadow-gold);padding:.75rem 1.5rem}
+.btn-gold:hover{filter:brightness(1.1)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--fg);padding:.75rem 1.5rem}
+.btn-outline:hover{background:#261d1c}
+
+/* HEADER */
+header.site{position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(55,42,42,.6);background:rgba(14,9,8,.85);backdrop-filter:blur(12px)}
+header.site .container{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;padding-bottom:.75rem}
+.logo{display:flex;align-items:center;gap:.5rem;font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700}
+.logo-badge{width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:.5rem;background:var(--grad-primary);box-shadow:var(--shadow-glow)}
+nav.desktop{display:none;gap:1.75rem}
+nav.desktop a{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s}
+nav.desktop a:hover{color:var(--fg)}
+@media(min-width:768px){nav.desktop{display:flex}}
+
+/* SECTIONS */
+section.block{padding:4rem 1rem}
+.section-head{text-align:center;margin-bottom:2.5rem}
+.section-head .kicker{font-size:.875rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--primary)}
+.section-head h2{margin-top:.25rem;font-size:1.875rem;font-weight:700}
+@media(min-width:640px){.section-head h2{font-size:2.25rem}}
+.section-head p{margin:.5rem auto 0;max-width:28rem;font-size:.875rem;color:var(--muted)}
+.bg-card-40{background:rgba(25,18,18,.4)}
+
+/* MARQUEE */
+.marquee-wrap{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
+.marquee{display:flex;gap:1rem;width:max-content;animation:marquee 40s linear infinite}
+.marquee-wrap:hover .marquee{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.poster{position:relative;width:10rem;flex-shrink:0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(55,42,42,.6);box-shadow:var(--shadow-card)}
+.poster img{width:100%;aspect-ratio:2/3;object-fit:cover;transition:transform .5s}
+.poster:hover img{transform:scale(1.05)}
+.poster .grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,9,8,.2) 40%,transparent 100%)}
+.poster .rating{position:absolute;top:.5rem;right:.5rem;display:flex;align-items:center;gap:.25rem;background:rgba(14,9,8,.8);backdrop-filter:blur(4px);padding:.125rem .5rem;border-radius:9999px;font-size:.75rem;font-weight:600}
+.poster .rating svg{width:.75rem;height:.75rem;fill:var(--primary);color:var(--primary)}
+.poster .info{position:absolute;bottom:0;left:0;right:0;padding:.75rem}
+.poster .info .tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--primary)}
+.poster .info .title{font-family:'Oswald',sans-serif;font-size:.875rem;font-weight:600;line-height:1.25}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
+@media(min-width:640px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.cat-grid{grid-template-columns:repeat(3,1fr)}}
+.cat-card{position:relative;overflow:hidden;border-radius:1rem;border:1px solid rgba(55,42,42,.6);box-shadow:var(--shadow-card);transition:all .3s}
+.cat-card:hover{transform:translateY(-.25rem);border-color:rgba(229,2,33,.5)}
+.cat-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .5s}
+.cat-card:hover img{transform:scale(1.05)}
+.cat-card .grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,9,8,.4) 50%,transparent 100%)}
+.cat-card .info{position:absolute;bottom:0;left:0;right:0;padding:1rem}
+.cat-card .info .name{font-family:'Oswald',sans-serif;font-size:1.125rem;font-weight:600}
+.cat-card .info .desc{font-size:.75rem;color:var(--muted)}
+
+/* PLANS */
+.plans{display:grid;grid-template-columns:1fr;gap:1.25rem;max-width:64rem;margin:0 auto}
+@media(min-width:640px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.plans{grid-template-columns:repeat(4,1fr)}}
+.plan{position:relative;display:flex;flex-direction:column;border:1px solid rgba(55,42,42,.6);border-radius:1rem;padding:1.5rem;background:var(--grad-card);box-shadow:var(--shadow-card);transition:transform .3s}
+.plan:hover{transform:translateY(-.25rem)}
+.plan.gold{border-color:var(--gold);box-shadow:var(--shadow-gold)}
+.plan.red{border-color:var(--red);box-shadow:0 0 40px -8px rgba(229,2,33,.55)}
+.plan.green{border-color:rgba(16,185,129,.6);box-shadow:0 0 25px -5px rgba(16,185,129,.5)}
+.plan .badge{position:absolute;top:-.75rem;left:50%;transform:translateX(-50%);white-space:nowrap;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.plan .badge.green{background:#10b981;color:#fff}
+.plan .badge.gold{background:var(--grad-gold);color:#000}
+.plan .badge.red{background:var(--grad-primary);color:var(--primary-fg)}
+.plan h3{font-family:'Oswald',sans-serif;font-size:1.25rem;font-weight:600}
+.plan .price{display:flex;align-items:flex-end;gap:.25rem;margin-top:.75rem}
+.plan .price .amount{font-family:'Oswald',sans-serif;font-size:1.875rem;font-weight:700}
+.plan .price .period{padding-bottom:.25rem;font-size:.875rem;color:var(--muted)}
+.plan .screens{margin-top:.5rem;display:inline-block;font-size:.75rem;font-weight:500}
+.plan ul{list-style:none;margin-top:1.25rem;flex:1;display:flex;flex-direction:column;gap:.625rem}
+.plan li{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--muted)}
+.plan li svg{width:1rem;height:1rem;flex-shrink:0}
+.plan .btn{margin-top:1.5rem;width:100%}
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
+@media(min-width:768px){.testi-grid{grid-template-columns:repeat(3,1fr)}}
+.testi{display:flex;flex-direction:column;border:1px solid rgba(55,42,42,.6);border-radius:1rem;background:var(--grad-card);padding:1.5rem;box-shadow:var(--shadow-card)}
+.testi .quote{width:2rem;height:2rem;color:rgba(229,2,33,.6)}
+.testi .stars{margin-top:.5rem;display:flex;gap:.125rem}
+.testi .stars svg{width:1rem;height:1rem;fill:var(--primary);color:var(--primary)}
+.testi p{margin-top:1rem;flex:1;font-size:.875rem;color:var(--muted)}
+.testi .author{margin-top:1.25rem;display:flex;align-items:center;gap:.75rem}
+.testi .avatar{width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--grad-primary);font-family:'Oswald',sans-serif;font-weight:700;color:var(--primary-fg)}
+.testi .author .name{font-size:.875rem;font-weight:600}
+.testi .author .loc{font-size:.75rem;color:var(--muted)}
+
+/* FAQ */
+.faq{max-width:48rem;margin:0 auto}
+.faq details{margin-bottom:.75rem;border:1px solid rgba(55,42,42,.6);border-radius:.75rem;background:var(--grad-card);padding:0 1rem}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'▾';color:var(--muted);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(180deg)}
+.faq .answer{padding-bottom:1rem;font-size:.875rem;color:var(--muted)}
+
+/* FOOTER */
+footer.site{border-top:1px solid rgba(55,42,42,.6);background:rgba(25,18,18,.4)}
+footer.site .container{padding:3.5rem 1rem}
+footer .cta-box{border-radius:1rem;background:var(--grad-card);padding:2rem;text-align:center;box-shadow:var(--shadow-card)}
+footer .cta-box h2{font-size:1.5rem;font-weight:700}
+@media(min-width:640px){footer .cta-box h2{font-size:1.875rem}}
+footer .cta-box p{margin:.5rem auto 0;max-width:28rem;font-size:.875rem;color:var(--muted)}
+footer .cta-box .btn{margin-top:1.5rem;height:3rem;font-size:1rem}
+footer .bottom{margin-top:2.5rem;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:1rem;border-top:1px solid rgba(55,42,42,.6);padding-top:2rem}
+@media(min-width:640px){footer .bottom{flex-direction:row}}
+footer .copy{font-size:.75rem;color:var(--muted)}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:1.25rem;right:1.25rem;z-index:50;width:3.5rem;height:3.5rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#25d366;color:#fff;box-shadow:0 10px 15px -3px rgba(0,0,0,.1);transition:transform .2s;animation:pulse-glow 2s ease-in-out infinite}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float svg{width:1.75rem;height:1.75rem;fill:#fff}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}50%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <a href="#" class="logo">
+      <span class="logo-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="fill:#fff;color:#fff"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+      </span>
+      Play Cine011
+    </a>
+    <nav class="desktop">
+      <a href="#em-alta">Em Alta</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="https://api.whatsapp.com/send/?phone=5511966957972&text=Ol%C3%A1%21+Vim+pelo+Instagram+playcine011+e+quero+solicitar+meu+teste+de+6+horas." target="_blank" rel="noopener" class="btn btn-primary" style="padding:.5rem .75rem;font-size:.75rem">TESTE GRÁTIS</a>
+  </div>
+</header>
+
+<main>
+<!-- A SEÇÃO "HERO" FOI REMOVIDA DAQUI -->
+
+<section id="em-alta" class="block">
+  <div class="container">
+    <div class="section-head" style="text-align:left;display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <p class="kicker">🔥 Em Alta</p>
+        <h2>Os mais assistidos</h2>
+      </div>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee" id="marquee"></div>
+    </div>
+  </div>
+</section>
+
+<section id="categorias" class="block bg-card-40">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">Tudo em um só lugar</p>
+      <h2>Categorias Disponíveis</h2>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<section id="planos" class="block">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">Escolha o seu</p>
+      <h2>Planos para todos</h2>
+      <p>Quanto maior o plano, maior a economia. Cancele quando quiser.</p>
+    </div>
+    <div class="plans" id="plans"></div>
+  </div>
+</section>
+
+<section class="block bg-card-40">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">Quem assina, ama</p>
+      <h2>O que dizem nossos clientes</h2>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<section id="faq" class="block">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">Dúvidas frequentes</p>
+      <h2>Perguntas & Respostas</h2>
+    </div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer id="contato" class="site">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Pronto para começar?</h2>
+      <p>Fale com a gente agora pelo WhatsApp e libere seu acesso em minutos.</p>
+      <a href="https://api.whatsapp.com/send/?phone=5511966957972&text=Ol%C3%A1%21+Vim+pelo+Instagram+playcine011+e+quero+solicitar+meu+teste+de+6+horas." target="_blank" rel="noopener" class="btn btn-primary">💬 ASSINAR AGORA</a>
+    </div>
+    <div class="bottom">
+      <a href="#" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="fill:#fff;color:#fff"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+        </span>
+        Play Cine011
+      </a>
+      <p class="copy">© <span id="year"></span> PlayCine011. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://api.whatsapp.com/send/?phone=5511966957972&text=Ol%C3%A1%21+Vim+pelo+Instagram+playcine011+e+quero+solicitar+meu+teste+de+6+horas." target="_blank" rel="noopener" aria-label="WhatsApp" class="wa-float">
+  <svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path></svg>
+</a>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const z = 'https://image.tmdb.org/t/p/w500';
+const posters = [
+  {img:z+'/wUc6IDf5ChjM1UyQye21qFBeJY0.jpg',t:'Obsessão',n:'8.9',tag:'Suspense'},
+  {img:z+'/m0ehGErq8GTLK4WZxaq9QLGAR3u.jpg',t:'A Odisseia',n:'9.1',tag:'Aventura'},
+  {img:z+'/oJ5NVSCi1h1EkJiYN9gAAYEtPQA.jpg',t:'Moana',n:'8.5',tag:'Animação'},
+  {img:z+'/fteLdvfRnltfLjAEnsl5E3vImnW.jpg',t:'A Morte do Demônio: Em Chamas',n:'8.3',tag:'Terror'},
+  {img:z+'/qEl4BDBTGnhLiadZx0c9nHM8vBF.jpg',t:'Backrooms: Um Não-Lugar',n:'8.0',tag:'Terror'},
+  {img:z+'/7i5SCCAooEriurXkraQ1t2stDZx.jpg',t:'Digger',n:'8.2',tag:'Ação'},
+  {img:z+'/k334z7zxOJlJvOsOwyRF6HClCvi.jpg',t:'The Furious',n:'8.4',tag:'Ação'},
+  {img:z+'/sssrBhdvDcczgMQYDc8oCoSuFEJ.jpg',t:'Toy Story 5',n:'8.7',tag:'Animação'},
+  {img:z+'/x0nvYzQpyJc5pdT9lMnkMuYAg0O.jpg',t:'Homem-Aranha: Um Novo Dia',n:'9.0',tag:'Ação'},
+  {img:z+'/hTowtXrkCY7FJyoj4p91JckrJSE.jpg',t:'Minions & Monstros',n:'8.1',tag:'Animação'},
+  {img:z+'/7pIgFNoX07z7alHt73TSsKRtYye.jpg',t:'Devoradores de Estrelas',n:'8.3',tag:'Sci-Fi'},
+  {img:z+'/50yWyY981TyUHhoxxSEKwO70FmQ.jpg',t:'O Diabo Veste Prada 2',n:'8.6',tag:'Drama'}
+];
+const star = '<svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>';
+const mq = document.getElementById('marquee');
+[...posters,...posters].forEach(p=>{
+  mq.insertAdjacentHTML('beforeend',`<div class="poster"><img src="${p.img}" alt="${p.t}" loading="lazy"><div class="grad"></div><span class="rating">${star}${p.n}</span><div class="info"><p class="tag">${p.tag}</p><p class="title">${p.t}</p></div></div>`);
+});
+
+const cats = [
+  {n:'Filmes e Séries',d:'Lançamentos e temporadas completas.',i:'https://image.tmdb.org/t/p/w780/kqjL17yufvn9OVLyXYpvtyrFfak.jpg'},
+  {n:'Canais Infantis',d:'Desenhos para todas as idades.',i:'https://image.tmdb.org/t/p/w780/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg'},
+  {n:'Esportes',d:'Futebol, lutas e muito mais ao vivo.',i:'https://image.tmdb.org/t/p/w780/6t7G7vXkQ8cKqJqJqJqJqJqJqJq.jpg'},
+  {n:'Animes',d:'Títulos populares em HD.',i:'https://image.tmdb.org/t/p/w780/q719jXXEzOoYaps6babgKnONONX.jpg'},
+  {n:'Doramas',d:'Romances e dramas da Ásia.',i:'https://image.tmdb.org/t/p/w780/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg'},
+  {n:'Documentários',d:'Histórias reais surpreendentes.',i:'https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg'}
+];
+const cg = document.getElementById('catGrid');
+cats.forEach(c=>{
+  cg.insertAdjacentHTML('beforeend',`<div class="cat-card"><img src="${c.i}" alt="${c.n}" loading="lazy" onerror="this.style.background='#211818'"><div class="grad"></div><div class="info"><p class="name">${c.n}</p><p class="desc">${c.d}</p></div></div>`);
+});
+
+const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const features = ['Catálogo completo 4K','Sem anúncios','Em todos os dispositivos','Suporte 24 horas'];
+const waLink = 'https://api.whatsapp.com/send/?phone=5511966957972&text=Ol%C3%A1%21+Vim+pelo+Instagram+playcine011+e+quero+solicitar+meu+teste+de+6+horas.';
+const plans = [
+  {n:'Mensal',p:'R$ 14,99',per:'/mês',badge:'🚀 COMECE AQUI',cls:'green',color:'#10b981',screens:'2 telas'},
+  {n:'Trimestral',p:'R$ 39,99',per:'/3 meses',badge:'💎 MELHOR CUSTO',cls:'',color:'#3b82f6',screens:'2 telas'},
+  {n:'Semestral',p:'R$ 74,99',per:'/6 meses',badge:'MAIS POPULAR',cls:'red',color:'#e50221',screens:'2 telas'},
+  {n:'Anual',p:'R$ 99,99',per:'/ano',badge:'MAIOR ECONOMIA',cls:'gold',color:'#dba400',screens:'2 telas'}
+];
+const pg = document.getElementById('plans');
+plans.forEach(pl=>{
+  const btnCls = pl.cls==='gold'?'btn-gold':pl.cls==='red'?'btn-primary':pl.cls==='green'?'btn-primary':'btn-outline';
+  pg.insertAdjacentHTML('beforeend',`
+    <div class="plan ${pl.cls}">
+      <span class="badge ${pl.cls}">${pl.badge}</span>
+      <h3>Plano ${pl.n}</h3>
+      <div class="price"><span class="amount" style="color:${pl.color}">${pl.p}</span><span class="period">${pl.per}</span></div>
+      <span class="screens" style="color:${pl.color}">${pl.screens}</span>
+      <ul>${features.map(f=>`<li><span style="color:${pl.color};width:1rem;height:1rem;display:inline-flex">${check}</span>${f}</li>`).join('')}</ul>
+      <a href="${waLink}" target="_blank" rel="noopener" class="btn ${btnCls}">ASSINAR AGORA</a>
+    </div>`);
+});
+
+const testis = [
+  {n:'Mariana Costa',l:'São Paulo, SP',t:'Melhor plataforma que já assinei! Imagem em 4K perfeita e nunca trava.',i:'M'},
+  {n:'Rafael Lima',l:'Recife, PE',t:'O catálogo de animes e doramas é gigante. Vale muito a pena!',i:'R'},
+  {n:'Juliana Alves',l:'Belo Horizonte, MG',t:'Assinei o plano anual e foi a melhor escolha. Suporte super rápido.',i:'J'}
+];
+const tg = document.getElementById('testiGrid');
+testis.forEach(t=>{
+  tg.insertAdjacentHTML('beforeend',`
+    <div class="testi">
+      <svg class="quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+      <div class="stars">${star.repeat(5)}</div>
+      <p>"${t.t}"</p>
+      <div class="author"><div class="avatar">${t.i}</div><div><p class="name">${t.n}</p><p class="loc">${t.l}</p></div></div>
+    </div>`);
+});
+
+const faqs = [
+  {q:'Em quais dispositivos posso assistir?',a:'Android, iPhone, iPad, computador, navegador e Smart TV.'},
+  {q:'Preciso de fidelidade ou contrato?',a:'Não! Todos os planos são sem fidelidade. Cancele quando quiser.'},
+  {q:'O conteúdo é em alta qualidade?',a:'Sim, Full HD e 4K nos títulos compatíveis.'},
+  {q:'Como funciona o pagamento?',a:'Aceitamos Pix, cartão de crédito e boleto. Acesso liberado na hora.'},
+  {q:'Posso assistir offline?',a:'Sim! No app Android e iPhone você pode baixar conteúdo.'},
+  {q:'Tem suporte se eu tiver dúvidas?',a:'Sim, 24h pelo WhatsApp com atendimento humano.'}
+];
+const fl = document.getElementById('faqList');
+faqs.forEach(f=>{
+  fl.insertAdjacentHTML('beforeend',`<details><summary>${f.q}</summary><div class="answer">${f.a}</div></details>`);
+});
+</script>
+</body>
+</html>
