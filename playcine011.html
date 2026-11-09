@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -19,14 +19,13 @@
   --shadow-glow:0 0 40px -8px rgba(229,2,33,.55);
   --shadow-gold:0 0 40px -8px rgba(219,164,0,.55);
   --shadow-card:0 18px 40px -16px rgba(0,0,0,.7);
-  --radius:.75rem;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5; overflow-x: hidden;}
 h1,h2,h3,.font-display{font-family:'Oswald','Inter',sans-serif;letter-spacing:.01em}
 a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
+img{max-width:100%;display:block; background-color: #2a1f1f; }
 .container{max-width:72rem;margin:0 auto;padding:0 1rem}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;cursor:pointer;border:none;border-radius:.5rem;transition:all .2s}
 .btn-primary{background:var(--grad-primary);color:var(--primary-fg);box-shadow:var(--shadow-glow);padding:.75rem 1.5rem}
@@ -37,7 +36,7 @@ img{max-width:100%;display:block}
 .btn-outline:hover{background:#261d1c}
 
 /* HEADER */
-header.site{position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(55,42,42,.6);background:rgba(14,9,8,.85);backdrop-filter:blur(12px)}
+header.site{position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(55,42,42,.6);background:rgba(14,9,8,.95);backdrop-filter:blur(12px)}
 header.site .container{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;padding-bottom:.75rem}
 .logo{display:flex;align-items:center;gap:.5rem;font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700}
 .logo-badge{width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:.5rem;background:var(--grad-primary);box-shadow:var(--shadow-glow)}
@@ -53,7 +52,7 @@ section.block{padding:4rem 1rem}
 .section-head h2{margin-top:.25rem;font-size:1.875rem;font-weight:700}
 @media(min-width:640px){.section-head h2{font-size:2.25rem}}
 .section-head p{margin:.5rem auto 0;max-width:28rem;font-size:.875rem;color:var(--muted)}
-.bg-card-40{background:rgba(25,18,18,.4)}
+.bg-card-40{background:rgba(25,18,18,.6)}
 
 /* MARQUEE */
 .marquee-wrap{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
@@ -74,9 +73,9 @@ section.block{padding:4rem 1rem}
 .cat-grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
 @media(min-width:640px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1024px){.cat-grid{grid-template-columns:repeat(3,1fr)}}
-.cat-card{position:relative;overflow:hidden;border-radius:1rem;border:1px solid rgba(55,42,42,.6);box-shadow:var(--shadow-card);transition:all .3s}
+.cat-card{position:relative;overflow:hidden;border-radius:1rem;border:1px solid rgba(55,42,42,.6);box-shadow:var(--shadow-card);transition:all .3s; aspect-ratio: 4/3; background: #1f1616;}
 .cat-card:hover{transform:translateY(-.25rem);border-color:rgba(229,2,33,.5)}
-.cat-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .5s}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .cat-card:hover img{transform:scale(1.05)}
 .cat-card .grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,9,8,.4) 50%,transparent 100%)}
 .cat-card .info{position:absolute;bottom:0;left:0;right:0;padding:1rem}
@@ -129,7 +128,7 @@ section.block{padding:4rem 1rem}
 .faq .answer{padding-bottom:1rem;font-size:.875rem;color:var(--muted)}
 
 /* FOOTER */
-footer.site{border-top:1px solid rgba(55,42,42,.6);background:rgba(25,18,18,.4)}
+footer.site{border-top:1px solid rgba(55,42,42,.6);background:rgba(25,18,18,.6)}
 footer.site .container{padding:3.5rem 1rem}
 footer .cta-box{border-radius:1rem;background:var(--grad-card);padding:2rem;text-align:center;box-shadow:var(--shadow-card)}
 footer .cta-box h2{font-size:1.5rem;font-weight:700}
@@ -168,8 +167,6 @@ footer .copy{font-size:.75rem;color:var(--muted)}
 </header>
 
 <main>
-<!-- A SEÇÃO "HERO" FOI REMOVIDA DAQUI -->
-
 <section id="em-alta" class="block">
   <div class="container">
     <div class="section-head" style="text-align:left;display:flex;justify-content:space-between;align-items:flex-end">
@@ -251,7 +248,6 @@ footer .copy{font-size:.75rem;color:var(--muted)}
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-
 const z = 'https://image.tmdb.org/t/p/w500';
 const posters = [
   {img:z+'/wUc6IDf5ChjM1UyQye21qFBeJY0.jpg',t:'Obsessão',n:'8.9',tag:'Suspense'},
@@ -273,17 +269,18 @@ const mq = document.getElementById('marquee');
   mq.insertAdjacentHTML('beforeend',`<div class="poster"><img src="${p.img}" alt="${p.t}" loading="lazy"><div class="grad"></div><span class="rating">${star}${p.n}</span><div class="info"><p class="tag">${p.tag}</p><p class="title">${p.t}</p></div></div>`);
 });
 
+// IMAGENS ATUALIZADAS E MAIS ESTÁVEIS AQUI:
 const cats = [
-  {n:'Filmes e Séries',d:'Lançamentos e temporadas completas.',i:'https://image.tmdb.org/t/p/w780/kqjL17yufvn9OVLyXYpvtyrFfak.jpg'},
-  {n:'Canais Infantis',d:'Desenhos para todas as idades.',i:'https://image.tmdb.org/t/p/w780/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg'},
-  {n:'Esportes',d:'Futebol, lutas e muito mais ao vivo.',i:'https://image.tmdb.org/t/p/w780/6t7G7vXkQ8cKqJqJqJqJqJqJqJq.jpg'},
-  {n:'Animes',d:'Títulos populares em HD.',i:'https://image.tmdb.org/t/p/w780/q719jXXEzOoYaps6babgKnONONX.jpg'},
-  {n:'Doramas',d:'Romances e dramas da Ásia.',i:'https://image.tmdb.org/t/p/w780/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg'},
-  {n:'Documentários',d:'Histórias reais surpreendentes.',i:'https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg'}
+  {n:'Filmes e Séries',d:'Lançamentos e temporadas completas.',i:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop'},
+  {n:'Canais Infantis',d:'Desenhos para todas as idades.',i:'https://images.unsplash.com/photo-1533681904393-9ab6eee7e408?q=80&w=800&auto=format&fit=crop'},
+  {n:'Esportes',d:'Futebol, lutas e muito mais ao vivo.',i:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=800&auto=format&fit=crop'},
+  {n:'Animes',d:'Títulos populares em HD.',i:'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop'},
+  {n:'Doramas',d:'Romances e dramas da Ásia.',i:'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=800&auto=format&fit=crop'},
+  {n:'Documentários',d:'Histórias reais surpreendentes.',i:'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop'}
 ];
 const cg = document.getElementById('catGrid');
 cats.forEach(c=>{
-  cg.insertAdjacentHTML('beforeend',`<div class="cat-card"><img src="${c.i}" alt="${c.n}" loading="lazy" onerror="this.style.background='#211818'"><div class="grad"></div><div class="info"><p class="name">${c.n}</p><p class="desc">${c.d}</p></div></div>`);
+  cg.insertAdjacentHTML('beforeend',`<div class="cat-card"><img src="${c.i}" alt="${c.n}" loading="lazy" onerror="this.style.display='none'"><div class="grad"></div><div class="info"><p class="name">${c.n}</p><p class="desc">${c.d}</p></div></div>`);
 });
 
 const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
